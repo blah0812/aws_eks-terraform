@@ -4,8 +4,8 @@ locals {
 apiVersion: v1
 clusters:
 - cluster:
-    server: ${aws_eks_cluster.demo.endpoint}
-    certificate-authority-data: ${aws_eks_cluster.demo.certificate_authority.0.data}
+    server: ${aws_eks_cluster.first-cluster.endpoint}
+    certificate-authority-data: ${aws_eks_cluster.first-cluster.certificate_authority.0.data}
   name: kubernetes
 contexts: 
 - context:
@@ -38,8 +38,8 @@ resource "aws_eks_cluster" "first-cluster" {
   name = var.eks-name
   role_arn = aws_iam_role.first-cluster.arn
   vpc_config {
-    security_group_ids =["${aws_security_group.demo-cluster.id}"]
-    subnet-ids = aws_subnet.demo.*.id
+    security_group_ids =["${aws_security_group.first-sg.id}"]
+    subnet_ids = [aws_subnet.private_subnet[0].id, aws_subnet.public_subnet[0].id]
   }
   depends_on = [
     aws_iam_role_policy_attachment.first-cluster-AmazonEKSClusterPolicy,

@@ -1,23 +1,32 @@
-variable "clusteName" {
-  default = "eks-terraform"
+variable "eks-name" {
+  default = "eks-first-cluster"
+}
+variable "region" {
+  default = "ap-south-1"
 }
 
-variable "spot-instances" {
-  default = ["t3.small","t2.small"]
+variable "vpc_cidr" {
+  default = "10.20.0.0/16"
 }
 
-variable "ondemand-instance" {
-  default = "t3.medium"
+
+variable "public_subnets_cidr" {
+  default = [
+    "10.20.0.0/19",
+    "10.20.32.0/19"
+  ]
+  type = list(any)
 }
 
-variable "spot_max_size" {
-  default = "2"
+variable "private_subnets_cidr" {
+  default = [
+    "10.20.64.0/19",
+    "10.20.96.0/19",
+  ]
+  type = list(any)
 }
 
-variable "spot_desired_size" {
-  default = "2"
-}
-
-variable "ondemand_desired" {
-  default = "1"
-}
+# variable "environment" {
+# description = "The environment which to fetch the configuration for."
+# type = string
+# }
